@@ -1,0 +1,25 @@
+name: sales_ai_platform
+description: "AI-powered sales dialer + call tracking system for hackathon"
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+  connectivity_plus: ^5.0.2
+  permission_handler: ^11.0.1
+  lucide_icons: ^0.257.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
