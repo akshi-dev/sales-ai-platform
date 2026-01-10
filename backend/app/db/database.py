@@ -1,15 +1,19 @@
-from pymongo import MongoClient
-import os
-from dotenv import load_dotenv
+import json, os
 
-load_dotenv()
+DB_DIR = "db"
+CALLS_FILE = f"{DB_DIR}/calls.json"
 
-MONGO_URL = os.getenv("MONGO_URL")
+os.makedirs(DB_DIR, exist_ok=True)
 
-client = MongoClient(MONGO_URL)
-db = client["sales_ai_platform"]
+# initialize file if not exists
+if not os.path.exists(CALLS_FILE):
+    json.dump([], open(CALLS_FILE, "w"))
 
-users_collection = db["users"]
-leads_collection = db["leads"]
-calls_collection = db["calls"]
-analytics_collection = db["analytics"]
+def load_calls():
+    try:
+        return json.load(open(CALLS_FILE))
+    except:
+        return []
+
+def save_calls(data):
+    json.dump(data, open(CALLS_FILE, "w"), indent=2)
