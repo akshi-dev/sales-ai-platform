@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from backend.app.db.database import calls_collection
+from backend.app.db.database import load_calls
 
 router = APIRouter(prefix="/calls")
 
@@ -9,16 +9,13 @@ def calls_health():
 
 @router.get("/")
 def list_calls():
-    data = list(calls_collection.find({}))
-    # Convert ObjectId to string for frontend
-    for d in data:
-        d["_id"] = str(d["_id"])
-    return data
+    return load_calls()
 
 @router.get("/{call_id}")
 def get_call(call_id: str):
-    record = calls_collection.find_one({"_id": call_id})
-    if not record:
-        return {"error": "not found"}
-    record["_id"] = str(record["_id"])
-    return record
+    data = load_calls()
+    for r in data:
+        if r["id"] == call_id:
+            return r
+    return {"error": "not found"}
+
